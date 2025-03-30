@@ -1,7 +1,7 @@
 "use client";
 
 import { useQuery } from "@tanstack/react-query";
-import Person from "./Person";
+import Person from "./ChatPersonItem";
 import { useRecoilState } from "recoil";
 import {
   presenceState,

@@ -77,10 +77,10 @@ export default function SignIn({ setView }) {
       </div>
 
       <div className="py-4 w-full text-center max-w-lg border border-gray-400 bg-white">
-        아직 계정이 없으신가요?{" "}
+        아직 계정이 없으신가요? {/* "SIGNIN"에서 "SIGNUP"으로 변경 */}
         <button
           className="text-light-blue-600 font-bold"
-          onClick={() => setView("SIGNIN")}
+          onClick={() => setView("SIGNUP")}
         >
           가입하기
         </button>

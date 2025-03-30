@@ -1,4 +1,3 @@
-
 export type Json =
   | string
   | number
@@ -10,6 +9,27 @@ export type Json =
 export type Database = {
   public: {
     Tables: {
+      blocked_users: {
+        Row: {
+          blocked_id: string
+          blocker_id: string
+          created_at: string
+          id: number
+        }
+        Insert: {
+          blocked_id: string
+          blocker_id: string
+          created_at?: string
+          id?: number
+        }
+        Update: {
+          blocked_id?: string
+          blocker_id?: string
+          created_at?: string
+          id?: number
+        }
+        Relationships: []
+      }
       favorites: {
         Row: {
           created_at: string
@@ -36,6 +56,7 @@ export type Database = {
           created_at: string
           id: number
           is_deleted: boolean
+          is_read: boolean | null
           message: string
           receiver: string
           sender: string
@@ -44,14 +65,16 @@ export type Database = {
           created_at?: string
           id?: number
           is_deleted?: boolean
+          is_read?: boolean | null
           message: string
           receiver: string
-          sender: string
+          sender?: string
         }
         Update: {
           created_at?: string
           id?: number
           is_deleted?: boolean
+          is_read?: boolean | null
           message?: string
           receiver?: string
           sender?: string
@@ -87,6 +110,41 @@ export type Database = {
           vote_average?: number
         }
         Relationships: []
+      }
+      reports: {
+        Row: {
+          created_at: string
+          id: number
+          message_id: number
+          reason: string | null
+          reported_id: string
+          reporter_id: string
+        }
+        Insert: {
+          created_at?: string
+          id?: number
+          message_id: number
+          reason?: string | null
+          reported_id: string
+          reporter_id: string
+        }
+        Update: {
+          created_at?: string
+          id?: number
+          message_id?: number
+          reason?: string | null
+          reported_id?: string
+          reporter_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "reports_message_id_fkey"
+            columns: ["message_id"]
+            isOneToOne: false
+            referencedRelation: "message"
+            referencedColumns: ["id"]
+          },
+        ]
       }
       todo: {
         Row: {

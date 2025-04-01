@@ -11,15 +11,26 @@ export default function SignIn({ setView }) {
   const supabase = createBrowserSupabaseClient();
 
   const signInWithKakao = async () => {
+    // 현재 실행 중인 환경의 원본 URL 가져오기
+    const origin = typeof window !== 'undefined' ? window.location.origin : '';
+    
+    // 콜백 URL 설정
+    const redirectTo = `${origin}/auth/callback`;
+    
+    console.log("사용할 리다이렉트 URL:", redirectTo);
+    
     const { data, error } = await supabase.auth.signInWithOAuth({
       provider: "kakao",
       options: {
-        redirectTo: process.env.NEXT_PUBLIC_VERCEL_URL
-          ? `https://${process.env.NEXT_PUBLIC_VERCEL_URL}/auth/callback`
-          : "http://localhost:3000/auth/callback",
+        redirectTo,
       },
     });
-    console.log(data);
+    
+    if (error) {
+      console.error("카카오 로그인 오류:", error);
+    } else {
+      console.log("카카오 로그인 응답:", data);
+    }
   };
 
   const signInMutation = useMutation({
